@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ShopMart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">ShopMart Admin</h1>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#dashboard" class="nav-link active" onclick="showAdminSection('dashboard')">Dashboard</a>
+                <a href="#products-section" class="nav-link" onclick="showAdminSection('products-section')">Products</a>
+                <a href="#" class="nav-link" id="notification-link" onclick="showNotifications(); return false;">
+                    <i class="fas fa-bell"></i>
+                    Notifications
+                    <span id="notif-badge" class="notif-badge hidden">!</span>
+                </a>
+                <span class="admin-email" id="admin-email"></span>
+                <button class="btn-logout" id="logout-btn">Logout</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="admin-container">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="admin-content-section active">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card clickable" onclick="filterProducts('all')">
+                    <div class="stat-icon">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Total Products</h4>
+                        <h2 id="total-products">0</h2>
+                    </div>
+                </div>
+                <div class="stat-card clickable" onclick="filterProducts('low')">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Low Stock</h4>
+                        <h2 id="low-stock-count">0</h2>
+                    </div>
+                </div>
+                <div class="stat-card clickable" onclick="filterProducts('instock')">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>In Stock</h4>
+                        <h2 id="in-stock-count">0</h2>
+                    </div>
+                </div>
+                <div class="stat-card clickable" onclick="filterProducts('outofstock')">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Out of Stock</h4>
+                        <h2 id="out-of-stock-count">0</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Product Form -->
+            <div class="admin-section">
+                <h3><i class="fas fa-plus-circle"></i> Add New Product</h3>
+                <form id="product-form" class="product-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Product Name</label>
+                            <input type="text" id="product-name" required placeholder="Enter product name">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Category</label>
+                            <select id="product-category" required>
+                                <option value="">Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Fashion">Fashion</option>
+                                <option value="Home">Home & Living</option>
+                                <option value="Sports">Sports</option>
+                                <option value="Books">Books</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" rows="3" required placeholder="Enter product description"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-price">Price (₹)</label>
+                            <input type="number" id="product-price" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="product-quantity">Quantity</label>
+                            <input type="number" id="product-quantity" min="0" required placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-image">Image URL</label>
+                        <input type="url" id="product-image" required placeholder="https://example.com/image.jpg">
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-plus"></i> Add Product
+                    </button>
+                    <div id="form-message" class="form-message"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div id="products-section" class="admin-content-section">
+            <div class="admin-section">
+                <div class="products-header">
+                    <h3><i class="fas fa-list"></i> <span id="products-title">All Products</span></h3>
+                    <button class="btn-secondary" onclick="filterProducts('all')">Show All</button>
+                </div>
+                <div id="admin-products-list" class="admin-products-list"></div>
+                <div id="loading" class="loading-container">
+                    <div class="loading-spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+            </div>
+            <!-- POS (Sales) Panel -->
+            <div class="admin-section">
+                <h3><i class="fas fa-cash-register"></i> Sales (POS)</h3>
+                <div id="pos-panel" class="pos-panel">
+                    <div class="pos-bag">
+                        <div class="pos-bag-header">
+                            <h4>Bag</h4>
+                            <button class="btn-secondary btn-sm" onclick="clearPosBag()">Clear</button>
+                        </div>
+                        <div id="pos-bag-list" class="pos-bag-list">
+                            <div class="empty-state"><i class="fas fa-shopping-basket"></i><p>No items in bag</p></div>
+                        </div>
+                    </div>
+                    <div class="pos-summary">
+                        <div class="form-group">
+                            <label for="pos-discount">Discount (₹)</label>
+                            <input type="number" id="pos-discount" min="0" step="0.01" placeholder="0.00" oninput="renderPosBag()">
+                        </div>
+                        <div class="pos-totals">
+                            <div class="pos-row"><span>Subtotal</span><strong id="pos-subtotal">₹0.00</strong></div>
+                            <div class="pos-row"><span>Discount</span><strong id="pos-discount-display">-₹0.00</strong></div>
+                            <div class="pos-row total"><span>Total</span><strong id="pos-total">₹0.00</strong></div>
+                        </div>
+                        <button class="btn-primary" id="pos-sell-btn" onclick="sellBag()">
+                            <i class="fas fa-receipt"></i> Sell
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Product</h3>
+                <span class="close" id="close-edit">&times;</span>
+            </div>
+            <form id="edit-form" class="product-form">
+                <input type="hidden" id="edit-product-id">
+                <div class="form-group">
+                    <label for="edit-product-name">Product Name</label>
+                    <input type="text" id="edit-product-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-category">Category</label>
+                    <select id="edit-product-category" required>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Home">Home & Living</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Books">Books</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-description">Description</label>
+                    <textarea id="edit-product-description" rows="3" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-product-price">Price (₹)</label>
+                        <input type="number" id="edit-product-price" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-product-quantity">Quantity</label>
+                        <input type="number" id="edit-product-quantity" min="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-product-image">Image URL</label>
+                    <input type="url" id="edit-product-image" required>
+                </div>
+                <button type="submit" class="btn-primary">Update Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notifications Modal -->
+    <div id="notifications-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Stock Notifications</h3>
+                <span class="close" id="close-notifications">&times;</span>
+            </div>
+            <div id="notifications-list" class="notifications-list"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

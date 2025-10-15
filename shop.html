@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - ShopMart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-logo">ShopMart</h1>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#" class="nav-link">Shop</a>
+                <div class="search-box">
+                    <input type="text" id="search-bar" placeholder="Search products...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <a href="#" class="nav-link" id="wishlist-link">
+                    <i class="fas fa-heart"></i>
+                    Wishlist (<span id="wishlist-count">0</span>)
+                </a>
+                <a href="#" class="nav-link" id="cart-link">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart (<span id="cart-count">0</span>)
+                </a>
+                <button class="btn-logout" id="logout-btn">Logout</button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">Browse Products</h2>
+            <div id="products-grid" class="products-grid"></div>
+            <div id="loading" class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading products...</p>
+            </div>
+            <div id="no-products" class="no-products hidden">
+                <i class="fas fa-box-open"></i>
+                <p>No products available at the moment</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <span class="close" id="close-cart">&times;</span>
+            </div>
+            <div id="cart-items" class="cart-items"></div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <h4>Total: ₹<span id="cart-total">0</span></h4>
+                </div>
+                <button class="btn-primary" id="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>My Wishlist</h3>
+                <span class="close" id="close-wishlist">&times;</span>
+            </div>
+            <div id="wishlist-items" class="wishlist-items"></div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>Product Details</h3>
+                <span class="close" id="close-product">&times;</span>
+            </div>
+            <div id="product-detail" class="product-detail"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="shop.js"></script>
+</body>
+</html>
