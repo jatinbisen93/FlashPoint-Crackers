@@ -225,7 +225,7 @@ Version 1.0 - Features:
 
 ## 🚀 Live Demo
 
-👉 [Click here to view the project live]( https://jatinbisen93.github.io/FlashPoint-Crackers/)
+👉 [Click here to view the project live] ( https://jatinbisen93.github.io/FlashPoint-Crackers/)
 
 
 ##  Connect with me:
