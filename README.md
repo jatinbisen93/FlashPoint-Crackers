@@ -1,8 +1,8 @@
-# FlashPoint-Crackers E-Commerce System
+# FlashPoint-Crackers E-Commerce System 
 
 A modern, full-featured e-commerce platform with real-time inventory management, user shopping features, and admin dashboard.
 
-## 📁 Project Structure
+## 📁 Project Structure 
 
 ```
 project-folder/
@@ -18,7 +18,7 @@ project-folder/
 └── README.md              # This file
 ```
 
-## 🚀 Quick Start
+## 🚀 Quick Start Project
 
 ### 1. Setup Files
 1. Create a new folder for your project
