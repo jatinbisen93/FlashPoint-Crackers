@@ -33,7 +33,7 @@ project-folder/
    - shop.js
    - admin.js
 
-### 2. Firebase Configuration (Already Done)
+### 2. Firebase Configuration
 The Firebase configuration is already set up in `firebase-config.js`. The database is configured to use:
 - Database URL: `https://inventory-31f11-default-rtdb.europe-west1.firebasedatabase.app`
 - **Important**: All products MUST use `quantity` field (not `qty`)
@@ -223,7 +223,7 @@ Version 1.0 - Features:
 
 ---
 
-## 🚀 Live Demo
+## 🚀 Live Demo of Project
 
 👉 [Click here to view the project live] ( https://jatinbisen93.github.io/FlashPoint-Crackers/)
 
